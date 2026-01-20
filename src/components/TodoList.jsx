@@ -6,7 +6,9 @@ import RealTime from "./RealTime";
 const TodoList = () => {
   const [task, setTask] = useState("");
 
-  const [allTasks, setAllTasks] = useState([]);
+  let localData = JSON.parse(localStorage.getItem("all-Tasks")) || [];
+
+  const [allTasks, setAllTasks] = useState(localData);
 
   const [time, setTime] = useState(new Date());
 
@@ -27,6 +29,7 @@ const TodoList = () => {
     oldUser.push(task);
 
     setAllTasks(oldUser);
+    localStorage.setItem("all-Tasks", JSON.stringify(oldUser));
     setTask("");
   };
 
@@ -35,6 +38,7 @@ const TodoList = () => {
     remove.splice(idx, 1);
 
     setAllTasks(remove);
+    localStorage.setItem("all-Tasks", JSON.stringify(remove));
   };
 
   useEffect(() => {
